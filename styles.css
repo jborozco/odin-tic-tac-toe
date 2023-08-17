@@ -249,8 +249,14 @@ input {
 
 #btnContainer {
     margin-top: 50px;
+    height: 24px;
 }
 
 #announcement {
     margin-bottom: 50px;
+    height: 21px;
+}
+
+button {
+    cursor: pointer;
 }

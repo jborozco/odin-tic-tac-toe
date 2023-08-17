@@ -8,16 +8,12 @@ const gameLogic = (() => {
         let p2container = document.getElementById("player2div");
         let buttonContainer = document.getElementById("btnContainer");
 
-
-
-
         buttonContainer.innerHTML = '<button type="button" id="startBtn" onclick="gameLogic.init()" form="message">Start</button>';
         const startBtn = document.getElementById("startBtn")
 
-
-
-
     }
+
+
 
     //init player 
     const PlayerFactory = (name, isHuman) => {
@@ -85,6 +81,11 @@ const gameLogic = (() => {
             let gameCell = cellObj(i);
             gameBoard.push(gameCell);
         }
+        let buttonContainer = document.getElementById("btnContainer");
+        buttonContainer.innerHTML = '';
+        setTimeout(() => {
+            buttonContainer.innerHTML = '<button type="button" id="startBtn" onclick="location.reload()" form="message">End game</button>';
+        }, "2000");
 
         //launch game board animation
         document.getElementById("container").className = "on";
@@ -134,6 +135,7 @@ const gameLogic = (() => {
         }
         // render player
         p1container.innerHTML = `
+        <div id="player1Announcement"></div>
         <div class="playerImg" ><img src="img/player1.svg"></div>
         <div class="playername">${player1.name}</div>
         <div id="player1score" class="playerscore">Victory count: ${player1.score}</div>
@@ -141,6 +143,7 @@ const gameLogic = (() => {
         `;
 
         p2container.innerHTML = `
+        <div id="player2Announcement"></div>
         <div class="playerImg" ><img src="img/player2.svg"></div>
         <div class="playername">${player2.name}</div>
         <div id="player2score" class="playerscore">Victory count: ${player2.score}</div>
@@ -169,8 +172,10 @@ const gameLogic = (() => {
         else if (player2.turn) {
             p1container.className = '';
             p2container.className = 'turnTrue';
-            container.className += 'on oturn';
+            container.className = 'on oturn';
         }
+
+
 
     }
 
@@ -187,7 +192,9 @@ const gameLogic = (() => {
             gameBoard[2].status == gameBoard[4].status && gameBoard[4].status == gameBoard[6].status && gameBoard[6].status != "empty") {
 
             if (player1.turn) {
+                document.getElementById("announcement").innerText = player2.name + " won!";
                 alert(player2.name + " won!");
+
                 player2.score += 1;
                 reset();
             }
@@ -209,6 +216,8 @@ const gameLogic = (() => {
         var n = document.querySelectorAll('.cell');
         for (let e = 0; e < n.length; e++) {
             n[e].addEventListener('click', function () {
+                document.getElementById("announcement").innerText = ``;
+
                 if (gameBoard[e].status != "checkedX" && gameBoard[e].status != "checkedO") { //verify that the cell is not checked yet
                     if (player1.turn) {
                         gameBoard[e].status = "checkedX";
@@ -235,7 +244,6 @@ const gameLogic = (() => {
 
     }
 })();
-
 
 
 gameLogic.startGame();
