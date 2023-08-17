@@ -15,6 +15,7 @@ body {
 body {
     background-color: black;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
@@ -39,7 +40,7 @@ body {
     }
 }
 
-#container {
+#container.on {
     border: solid 1px white;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -127,8 +128,11 @@ body {
 
 #player1div,
 #player2div {
-    padding: 50px;
+    padding: 0 50px;
     opacity: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     /* border: solid 1px white; */
 }
 
@@ -231,4 +235,22 @@ body {
 #player2div .point {
     background-image: url(img/player2.svg);
 
+}
+
+input {
+    margin-top: 20px;
+    text-align: center
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+}
+
+#btnContainer {
+    margin-top: 50px;
+}
+
+#announcement {
+    margin-bottom: 50px;
 }

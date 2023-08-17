@@ -2,6 +2,23 @@
 
 //Module for initiating and controling the game 
 const gameLogic = (() => {
+
+    const startGame = () => {
+        let p1container = document.getElementById("player1div");
+        let p2container = document.getElementById("player2div");
+        let buttonContainer = document.getElementById("btnContainer");
+
+
+
+
+        buttonContainer.innerHTML = '<button type="button" id="startBtn" onclick="gameLogic.init()" form="message">Start</button>';
+        const startBtn = document.getElementById("startBtn")
+
+
+
+
+    }
+
     //init player 
     const PlayerFactory = (name, isHuman) => {
         let score = 0;
@@ -13,18 +30,27 @@ const gameLogic = (() => {
     let player1 = PlayerFactory("Player 1", true);
     let player2 = PlayerFactory("Player 2", true);
 
+
+
+
     let initPlayers = () => {
+        //give the chosen name to the player when game start
+        const playerName1 = document.getElementById("player1Name").value;
+        const playerName2 = document.getElementById("player2Name").value;
+        if (playerName1 != "") { player1.name = playerName1 }
+        if (playerName2 != "") { player2.name = playerName2 }
+
         //randomize which player start the game
         if (Math.random() < 0.5) {
             player1.turn = false;
-            alert(`${player2.name} starts !`);
+            document.getElementById("announcement").innerText = `${player2.name} starts !`;
             player1.firstToPlay = false;
             player2.firstToPlay = true;
 
         }
         else {
             player2.turn = false;
-            alert(`${player1.name} starts !`);
+            document.getElementById("announcement").innerText = `${player1.name} starts !`;
             player1.firstToPlay = true;
             player2.firstToPlay = false;
         }
@@ -39,10 +65,10 @@ const gameLogic = (() => {
         player2.turn = player2.firstToPlay;
 
         if (player1.firstToPlay) {
-            alert(`${player1.name} starts !`);
+            document.getElementById("announcement").innerText = `${player1.name} starts !`;
         }
         else {
-            alert(`${player2.name} starts !`)
+            document.getElementById("announcement").innerText = `${player2.name} starts !`;
         }
 
     }
@@ -59,8 +85,13 @@ const gameLogic = (() => {
             let gameCell = cellObj(i);
             gameBoard.push(gameCell);
         }
+
+        //launch game board animation
+        document.getElementById("container").className = "on";
+
         initPlayers()
         render();
+        checkCell();
     }
 
     const reset = () => {
@@ -132,13 +163,13 @@ const gameLogic = (() => {
         if (player1.turn) {
             p1container.className = 'turnTrue';
             p2container.className = '';
-            container.className = 'xturn';
+            container.className = 'on xturn';
         }
 
         else if (player2.turn) {
             p1container.className = '';
             p2container.className = 'turnTrue';
-            container.className = 'oturn';
+            container.className += 'on oturn';
         }
 
     }
@@ -198,13 +229,16 @@ const gameLogic = (() => {
     };
 
     return {
+        startGame,
         init,
         checkCell
+
     }
 })();
 
 
 
-gameLogic.init();
-gameLogic.checkCell()
+gameLogic.startGame();
+
+
 
