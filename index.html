@@ -12,16 +12,22 @@
 <body>
     <div id="announcement">Tic-Tac-Toe, the game</div>
     <div class="main">
-        <div id="player1div">
-            <div class="playerImg"><img src="img/player1.svg"></div>
-            <input type="text" placeholder="Enter player1 name" id="player1Name" from="message">
+        <div class="playerbox">
+            <div id="player1Announcement"></div>
+            <div id="player1div" class="intro">
+                <div class="playerImg"><img src="img/player1.svg"></div>
+                <input type="text" placeholder="Enter player1 name" id="player1Name" from="message" autocomplete="off">
 
+            </div>
         </div>
         <div id="container"></div>
-        <div id="player2div">
-            <div class="playerImg"><img src="img/player2.svg"></div>
-            <input type="text" placeholder="Enter player2 name" id="player2Name" from="message">
+        <div class="playerbox">
+            <div id="player2Announcement"></div>
+            <div id="player2div" class="intro">
+                <div class="playerImg"><img src="img/player2.svg"></div>
+                <input type="text" placeholder="Enter player2 name" id="player2Name" from="message" autocomplete="off">
 
+            </div>
         </div>
     </div>
     <div id="btnContainer"></div>

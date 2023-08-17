@@ -4,13 +4,8 @@
 const gameLogic = (() => {
 
     const startGame = () => {
-        let p1container = document.getElementById("player1div");
-        let p2container = document.getElementById("player2div");
         let buttonContainer = document.getElementById("btnContainer");
-
         buttonContainer.innerHTML = '<button type="button" id="startBtn" onclick="gameLogic.init()" form="message">Start</button>';
-        const startBtn = document.getElementById("startBtn")
-
     }
 
 
@@ -67,6 +62,28 @@ const gameLogic = (() => {
             document.getElementById("announcement").innerText = `${player2.name} starts !`;
         }
 
+
+        const showResult = (id, message) => {
+            document.getElementById(id).innerText = message;
+            document.getElementById(id).className = "on";
+            setTimeout(() => {
+                document.getElementById(id).className = "";
+                document.getElementById(id).innerText = "";
+            }, "3000");
+
+        }
+
+        if (!player1.lastWinner) {
+            showResult("player1Announcement", "Winner !")
+        }
+        else if (!player2.lastWinner) {
+            showResult("player2Announcement", "Winner !")
+        }
+        else {
+            showResult("player2Announcement", "Draw")
+            showResult("player1Announcement", "Draw")
+
+        }
     }
 
     let toggleTurn = () => {
@@ -84,7 +101,7 @@ const gameLogic = (() => {
         let buttonContainer = document.getElementById("btnContainer");
         buttonContainer.innerHTML = '';
         setTimeout(() => {
-            buttonContainer.innerHTML = '<button type="button" id="startBtn" onclick="location.reload()" form="message">End game</button>';
+            buttonContainer.innerHTML = '<button type="button" id="endBtn" onclick="location.reload()" form="message">End game</button>';
         }, "2000");
 
         //launch game board animation
@@ -101,6 +118,7 @@ const gameLogic = (() => {
             let gameCell = cellObj(i);
             gameBoard.push(gameCell);
         }
+
         resetPlayer();
         render();
 
@@ -120,7 +138,6 @@ const gameLogic = (() => {
         const p1container = document.getElementById("player1div");
         const p2container = document.getElementById("player2div");
         container.innerHTML = "";
-
         //render board
         for (i = 0; i < gameBoard.length; i++) {
             if (gameBoard[i].status === "checkedX") { // 
@@ -135,7 +152,6 @@ const gameLogic = (() => {
         }
         // render player
         p1container.innerHTML = `
-        <div id="player1Announcement"></div>
         <div class="playerImg" ><img src="img/player1.svg"></div>
         <div class="playername">${player1.name}</div>
         <div id="player1score" class="playerscore">Victory count: ${player1.score}</div>
@@ -143,7 +159,6 @@ const gameLogic = (() => {
         `;
 
         p2container.innerHTML = `
-        <div id="player2Announcement"></div>
         <div class="playerImg" ><img src="img/player2.svg"></div>
         <div class="playername">${player2.name}</div>
         <div id="player2score" class="playerscore">Victory count: ${player2.score}</div>
@@ -176,7 +191,6 @@ const gameLogic = (() => {
         }
 
 
-
     }
 
     const gameStatus = () => {
@@ -192,21 +206,20 @@ const gameLogic = (() => {
             gameBoard[2].status == gameBoard[4].status && gameBoard[4].status == gameBoard[6].status && gameBoard[6].status != "empty") {
 
             if (player1.turn) {
-                document.getElementById("announcement").innerText = player2.name + " won!";
-                alert(player2.name + " won!");
-
+                player1.lastWinner = true;
+                player2.lastWinner = false;
                 player2.score += 1;
                 reset();
             }
             else if (player2.turn) {
-                alert(player1.name + " won!");
+                player1.lastWinner = false;
+                player2.lastWinner = true;
                 player1.score += 1;
                 reset();
             }
 
         }
         else if (gameBoard[0].status != "empty" && gameBoard[1].status != "empty" && gameBoard[2].status != "empty" && gameBoard[3].status != "empty" && gameBoard[4].status != "empty" && gameBoard[5].status != "empty" && gameBoard[6].status != "empty" && gameBoard[7].status != "empty" && gameBoard[8].status != "empty") {
-            alert("Draw!");
             reset();
         }
 
