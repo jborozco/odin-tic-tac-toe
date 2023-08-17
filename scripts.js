@@ -63,27 +63,7 @@ const gameLogic = (() => {
         }
 
 
-        const showResult = (id, message) => {
-            document.getElementById(id).innerText = message;
-            document.getElementById(id).className = "on";
-            setTimeout(() => {
-                document.getElementById(id).className = "";
-                document.getElementById(id).innerText = "";
-            }, "3000");
 
-        }
-
-        if (!player1.lastWinner) {
-            showResult("player1Announcement", "Winner !")
-        }
-        else if (!player2.lastWinner) {
-            showResult("player2Announcement", "Winner !")
-        }
-        else {
-            showResult("player2Announcement", "Draw")
-            showResult("player1Announcement", "Draw")
-
-        }
     }
 
     let toggleTurn = () => {
@@ -195,6 +175,25 @@ const gameLogic = (() => {
 
     const gameStatus = () => {
 
+        const showResult = (id, id2, message) => {
+
+            document.getElementById(id).innerText = message;
+            document.getElementById(id).className = "on";
+            setTimeout(() => {
+                document.getElementById(id).className = "";
+                document.getElementById(id).innerText = "";
+            }, "3000");
+
+            if (id2 != "") {
+                document.getElementById(id2).innerText = message;
+                document.getElementById(id2).className = "on";
+                setTimeout(() => {
+                    document.getElementById(id2).className = "";
+                    document.getElementById(id2).innerText = "";
+                }, "3000");
+            }
+        }
+
         //check if a line is equal
         if (gameBoard[0].status == gameBoard[1].status && gameBoard[1].status == gameBoard[2].status && gameBoard[2].status != "empty" ||
             gameBoard[3].status == gameBoard[4].status && gameBoard[4].status == gameBoard[5].status && gameBoard[5].status != "empty" ||
@@ -206,20 +205,21 @@ const gameLogic = (() => {
             gameBoard[2].status == gameBoard[4].status && gameBoard[4].status == gameBoard[6].status && gameBoard[6].status != "empty") {
 
             if (player1.turn) {
-                player1.lastWinner = true;
-                player2.lastWinner = false;
+                showResult("player2Announcement", "", "Winner !");
                 player2.score += 1;
                 reset();
             }
             else if (player2.turn) {
-                player1.lastWinner = false;
-                player2.lastWinner = true;
+                showResult("player1Announcement", "", "Winner !")
                 player1.score += 1;
                 reset();
             }
 
         }
         else if (gameBoard[0].status != "empty" && gameBoard[1].status != "empty" && gameBoard[2].status != "empty" && gameBoard[3].status != "empty" && gameBoard[4].status != "empty" && gameBoard[5].status != "empty" && gameBoard[6].status != "empty" && gameBoard[7].status != "empty" && gameBoard[8].status != "empty") {
+
+            console.log(gameBoard[0].status)
+            showResult("player1Announcement", "player2Announcement", "Draw");
             reset();
         }
 
